@@ -36,5 +36,12 @@
         ></video>
       </a-assets>
     </a-scene>
+   <script>
+  const video = document.querySelector("#myvideo");
+
+  document.querySelector("a-scene").addEventListener("loaded", () => {
+    video.play().catch(() => {});
+  });
+   </script> 
   </body>
 </html>
