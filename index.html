@@ -10,42 +10,10 @@
 
   <style>
     body { margin: 0; overflow: hidden; }
-
-    #startScreen {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: black;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 20px;
-      z-index: 9999;
-      flex-direction: column;
-    }
-
-    #surpriseText {
-      position: fixed;
-      top: 20px;
-      width: 100%;
-      text-align: center;
-      color: white;
-      font-size: 22px;
-      opacity: 0;
-      transition: 1s;
-      z-index: 9998;
-    }
   </style>
 </head>
 
 <body>
-
-<!-- START SCREEN -->
-<div id="startScreen">🎁 Tap anywhere to start 🎁</div>
-
-<!-- SURPRISE TEXT -->
-<div id="surpriseText">✨ Surprise Activated ✨</div>
 
 <a-scene
   mindar-image="imageTargetSrc: targets.mind;"
@@ -63,7 +31,6 @@
       height="0.552"
       position="0 0 0"
       material="shader: flat"
-      animation="property: scale; to: 1.1 1.1 1.1; dir: alternate; loop: true; dur: 1500"
     ></a-video>
 
   </a-entity>
@@ -87,30 +54,17 @@ AFRAME.registerComponent('vidhandler', {
   init: function () {
     const video = document.querySelector("#myvideo");
 
+    // ONLY play when marker is found
     this.el.addEventListener("targetFound", () => {
+      video.currentTime = 0;
       video.play();
-
-      document.getElementById("surpriseText").style.opacity = "1";
     });
 
+    // pause when marker lost
     this.el.addEventListener("targetLost", () => {
       video.pause();
     });
   }
-});
-
-// 🔊 SOUND UNLOCK (IMPORTANT)
-document.addEventListener("pointerdown", () => {
-  const video = document.querySelector("#myvideo");
-
-  video.muted = false;
-  video.volume = 1;
-  video.play().catch(() => {});
-}, { once: true });
-
-// start screen remove
-document.getElementById("startScreen").addEventListener("click", () => {
-  document.getElementById("startScreen").style.display = "none";
 });
 </script>
 
