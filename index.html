@@ -10,10 +10,25 @@
 
   <style>
     body { margin: 0; }
+
+    #soundBtn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 999;
+      padding: 10px 15px;
+      background: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+    }
   </style>
 </head>
 
 <body>
+
+<!-- Sound button -->
+<button id="soundBtn">Enable Sound 🔊</button>
 
 <a-scene
   mindar-image="imageTargetSrc: targets.mind;"
@@ -41,7 +56,6 @@
       src="https://res.cloudinary.com/dm8xq6w9m/video/upload/v1776190305/VID_20260401_085138_832_ft1lyx.mp4"
       loop
       playsinline
-      muted
       crossorigin="anonymous"
       preload="auto"
     ></video>
@@ -62,6 +76,13 @@ AFRAME.registerComponent('vidhandler', {
       video.pause();
     });
   }
+});
+
+// Enable sound on button click (required for mobile)
+document.querySelector("#soundBtn").addEventListener("click", () => {
+  const video = document.querySelector("#myvideo");
+  video.muted = false;
+  video.play();
 });
 </script>
 
