@@ -11,24 +11,27 @@
   <style>
     body { margin: 0; }
 
-    #soundBtn {
+    #tapToStart {
       position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 999;
-      padding: 10px 15px;
-      background: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      z-index: 9999;
     }
   </style>
 </head>
 
 <body>
 
-<!-- Sound button -->
-<button id="soundBtn">Enable Sound 🔊</button>
+<!-- Tap screen (required for sound) -->
+<div id="tapToStart">Tap anywhere to start 🔊</div>
 
 <a-scene
   mindar-image="imageTargetSrc: targets.mind;"
@@ -56,6 +59,7 @@
       src="https://res.cloudinary.com/dm8xq6w9m/video/upload/v1776190305/VID_20260401_085138_832_ft1lyx.mp4"
       loop
       playsinline
+      muted
       crossorigin="anonymous"
       preload="auto"
     ></video>
@@ -78,12 +82,15 @@ AFRAME.registerComponent('vidhandler', {
   }
 });
 
-// Enable sound on button click (required for mobile)
-document.querySelector("#soundBtn").addEventListener("click", () => {
+// Tap to unlock sound
+document.body.addEventListener("click", () => {
   const video = document.querySelector("#myvideo");
+
   video.muted = false;
   video.play();
-});
+
+  document.getElementById("tapToStart").style.display = "none";
+}, { once: true });
 </script>
 
 </body>
