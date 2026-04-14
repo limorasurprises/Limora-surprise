@@ -28,7 +28,8 @@
 
 <body>
 
-<div id="startScreen">Tap anywhere to start 🎁</div>
+<!-- START SCREEN -->
+<div id="startScreen">Tap to start 🎁</div>
 
 <a-scene
   mindar-image="imageTargetSrc: targets.mind;"
@@ -67,22 +68,24 @@
 <script>
 const video = document.querySelector("#myvideo");
 
-// ONLY start AR, NOT sound
+// ONLY hide start screen (NO audio unlock here)
 document.getElementById("startScreen").addEventListener("click", () => {
   document.getElementById("startScreen").style.display = "none";
 });
 
-// ONLY play when marker found
+// AR CONTROL ONLY
 AFRAME.registerComponent('vidhandler', {
   init: function () {
+
     this.el.addEventListener("targetFound", () => {
       video.currentTime = 0;
-      video.muted = false;   // unlock ONLY here
-      video.play();
+      video.muted = false;
+      video.play().catch(() => {});
     });
 
     this.el.addEventListener("targetLost", () => {
       video.pause();
+      video.muted = true;
     });
   }
 });
