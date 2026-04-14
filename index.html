@@ -17,35 +17,41 @@
       device-orientation-permission-ui="enabled: false"
     >
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-      <a-entity mindar-image-target="targetIndex: 0">
+      <a-entity mindar-image-target="targetIndex: 0" vidhandler>
         <a-video
-          src="#myvideo"
-          width="1"
-          height="0.552"
-          position="0 0 0"
-        ></a-video>
+  src="#myvideo"
+  width="1"
+  height="0.552"
+  position="0 0 0"
+  material="shader: flat"
+></a-video>
       </a-entity>
       <a-assets>
-        <video
-          id="myvideo"
-          src="https://raw.githubusercontent.com/limorasurprises/Limora-surprise/main/VID_20260401_085138_548.mp4"
-          autoplay
-          loop
-          playsinline
-          crossorigin="anonymous"
-        ></video>
+<video
+  id="myvideo"
+  src="YOUR_VIDEO_LINK_HERE"
+  loop
+  playsinline
+  muted
+  crossorigin="anonymous"
+  preload="auto"
+></video>
       </a-assets>
     </a-scene>
 <script>
-  const video = document.querySelector("#myvideo");
+AFRAME.registerComponent('vidhandler', {
+  init: function () {
+    const video = document.querySelector("#myvideo");
 
-  video.addEventListener("loadeddata", () => {
-    video.play();
-  });
+    this.el.addEventListener("targetFound", () => {
+      video.play();
+    });
 
-  document.querySelector("a-scene").addEventListener("renderstart", () => {
-    video.play().catch(() => {});
-  });
-</script> 
+    this.el.addEventListener("targetLost", () => {
+      video.pause();
+    });
+  }
+});
+</script>
   </body>
 </html>
