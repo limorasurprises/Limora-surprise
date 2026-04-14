@@ -28,7 +28,6 @@
 
 <body>
 
-<!-- START SCREEN -->
 <div id="startScreen">Tap to start 🎁</div>
 
 <a-scene
@@ -68,19 +67,27 @@
 <script>
 const video = document.querySelector("#myvideo");
 
-// ONLY hide start screen (NO audio unlock here)
+let userTapped = false;
+
+// only hide start screen
 document.getElementById("startScreen").addEventListener("click", () => {
   document.getElementById("startScreen").style.display = "none";
+  userTapped = true;
 });
 
-// AR CONTROL ONLY
 AFRAME.registerComponent('vidhandler', {
   init: function () {
 
     this.el.addEventListener("targetFound", () => {
       video.currentTime = 0;
-      video.muted = false;
-      video.play().catch(() => {});
+      video.play();
+
+      // sound ONLY if user tapped first AND scan happens
+      if (userTapped) {
+        video.muted = false;
+      } else {
+        video.muted = true;
+      }
     });
 
     this.el.addEventListener("targetLost", () => {
