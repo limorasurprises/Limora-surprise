@@ -1,43 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Limora Surprises</title>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image.prod.js"></script>
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
-    <style>
-      body { margin: 0; }
-    </style>
-  </head>
-  <body>
-    <a-scene
-      mindar-image="imageTargetSrc: targets.mind;"
-      vr-mode-ui="enabled: false"
-      device-orientation-permission-ui="enabled: false"
-    >
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-      <a-entity mindar-image-target="targetIndex: 0" vidhandler>
-      <a-video
-  src="#myvideo"
-  width="1"
-  height="0.552"
-  position="0 0 0"
-  material="shader: flat"
-></a-video>
-      </a-entity>
-      <a-assets>
-<video
-  id="myvideo"
-  src="https://res.cloudinary.com/dm8xq6w9m/video/upload/v1776190305/VID_20260401_085138_832_ft1lyx.mp4"
-  loop
-  playsinline
-  muted
-  crossorigin="anonymous"
-  preload="auto"
-></video>
-      </a-assets>
-    </a-scene>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Limora Surprises</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image.prod.js"></script>
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+
+  <style>
+    body { margin: 0; }
+  </style>
+</head>
+
+<body>
+
+<a-scene
+  mindar-image="imageTargetSrc: targets.mind;"
+  vr-mode-ui="enabled: false"
+  device-orientation-permission-ui="enabled: false"
+>
+
+  <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+  <a-entity mindar-image-target="targetIndex: 0" vidhandler>
+
+    <a-video
+      src="#myvideo"
+      width="1"
+      height="0.552"
+      position="0 0 0"
+      material="shader: flat"
+    ></a-video>
+
+  </a-entity>
+
+  <a-assets>
+    <video
+      id="myvideo"
+      src="https://res.cloudinary.com/dm8xq6w9m/video/upload/v1776190305/VID_20260401_085138_832_ft1lyx.mp4"
+      loop
+      playsinline
+      muted
+      crossorigin="anonymous"
+      preload="auto"
+    ></video>
+  </a-assets>
+
+</a-scene>
+
 <script>
 AFRAME.registerComponent('vidhandler', {
   init: function () {
@@ -53,5 +64,6 @@ AFRAME.registerComponent('vidhandler', {
   }
 });
 </script>
-  </body>
+
+</body>
 </html>
