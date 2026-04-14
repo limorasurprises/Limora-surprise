@@ -2,36 +2,50 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Limora Surprises</title>
+  <title>Limora Surprise</title>
 
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image.prod.js"></script>
   <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 
   <style>
-    body { margin: 0; }
+    body { margin: 0; overflow: hidden; }
 
-    #tapToStart {
+    #startScreen {
       position: fixed;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.8);
+      background: black;
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 18px;
+      font-size: 20px;
       z-index: 9999;
+      flex-direction: column;
+    }
+
+    #surpriseText {
+      position: fixed;
+      top: 20px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 22px;
+      opacity: 0;
+      transition: 1s;
+      z-index: 9998;
     }
   </style>
 </head>
 
 <body>
 
-<!-- Tap screen (required for sound) -->
-<div id="tapToStart">Tap anywhere to start 🔊</div>
+<!-- START SCREEN -->
+<div id="startScreen">🎁 Tap anywhere to start 🎁</div>
+
+<!-- SURPRISE TEXT -->
+<div id="surpriseText">✨ Surprise Activated ✨</div>
 
 <a-scene
   mindar-image="imageTargetSrc: targets.mind;"
@@ -49,6 +63,7 @@
       height="0.552"
       position="0 0 0"
       material="shader: flat"
+      animation="property: scale; to: 1.1 1.1 1.1; dir: alternate; loop: true; dur: 1500"
     ></a-video>
 
   </a-entity>
@@ -74,6 +89,8 @@ AFRAME.registerComponent('vidhandler', {
 
     this.el.addEventListener("targetFound", () => {
       video.play();
+
+      document.getElementById("surpriseText").style.opacity = "1";
     });
 
     this.el.addEventListener("targetLost", () => {
@@ -82,15 +99,19 @@ AFRAME.registerComponent('vidhandler', {
   }
 });
 
-// Tap to unlock sound
-document.body.addEventListener("click", () => {
+// 🔊 SOUND UNLOCK (IMPORTANT)
+document.addEventListener("pointerdown", () => {
   const video = document.querySelector("#myvideo");
 
   video.muted = false;
-  video.play();
-
-  document.getElementById("tapToStart").style.display = "none";
+  video.volume = 1;
+  video.play().catch(() => {});
 }, { once: true });
+
+// start screen remove
+document.getElementById("startScreen").addEventListener("click", () => {
+  document.getElementById("startScreen").style.display = "none";
+});
 </script>
 
 </body>
